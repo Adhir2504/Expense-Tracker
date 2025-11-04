@@ -1,0 +1,9 @@
+<div class="toaster">
+  <div *ngFor="let t of toast.toasts()" class="toast-item" [class]="'toast-' + t.type">
+    <span>{{ t.text }}</span>
+    <button *ngIf="t.onAction" class="btn btn-sm btn-light ms-3" (click)="t.onAction?.(); toast.dismiss(t.id)">
+      {{ t.actionText || 'Action' }}
+    </button>
+    <button class="btn btn-sm btn-outline-light ms-2" (click)="toast.dismiss(t.id)">×</button>
+  </div>
+</div>

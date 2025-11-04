@@ -1,0 +1,40 @@
+<div class="login-wrapper">
+  <div class="card login-card">
+    <div class="card-body">
+      <h5 class="card-title mb-3 text-center">Sign in</h5>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" formControlName="email" placeholder="you@example.com">
+          <div class="text-danger small" *ngIf="form.controls['email'].touched && form.controls['email'].invalid">
+            Enter a valid email.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password" placeholder="••••••">
+          <div class="text-danger small" *ngIf="form.controls['password'].touched && form.controls['password'].invalid">
+            Minimum 3 characters.
+          </div>
+        </div>
+
+        <div class="form-check mb-3">
+          <input id="remember" type="checkbox" class="form-check-input" formControlName="remember">
+          <label for="remember" class="form-check-label">Remember me</label>
+        </div>
+
+        <button class="btn btn-primary w-100" type="submit" [disabled]="loading">
+          {{ loading ? 'Signing in…' : 'Sign in' }}
+        </button>
+
+        <div class="text-danger small mt-3" *ngIf="error">{{ error }}</div>
+      </form>
+
+      <div class="text-center mt-3 small text-muted">
+        Demo: any email & password will log in.
+      </div>
+    </div>
+  </div>
+</div>

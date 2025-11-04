@@ -1,0 +1,7 @@
+.navbar {
+  background: linear-gradient(0deg, rgba(15,21,34,.75), rgba(15,21,34,.75));
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.navbar .nav-link.active { font-weight: 600; color: #fff !important; }
+.navbar .form-select { min-width: 110px; }

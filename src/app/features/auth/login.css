@@ -1,0 +1,2 @@
+.login-wrapper { min-height: calc(100vh - 56px); display: grid; place-items: center; }
+.login-card { width: min(420px, 92vw); }

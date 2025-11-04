@@ -1,0 +1,50 @@
+/* Stronger contrast just for the Add page */
+
+/* Card title */
+.card-title {
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+/* Labels */
+.form-label {
+  color: var(--text);            /* was too muted on dark */
+  font-weight: 600;
+}
+
+/* Inputs & selects (text color + focus ring already set globally) */
+.form-control,
+.form-select {
+  color: var(--text);
+}
+
+/* Placeholder text: make it readable on dark surfaces */
+.form-control::placeholder {
+  color: var(--muted);
+  opacity: .95;
+}
+
+/* Input group symbol on the left (currency tag) */
+.input-group-text {
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid rgba(255,255,255,.12);
+  min-width: 2.5rem;
+  justify-content: center;
+}
+
+/* Validation messages */
+.text-danger.small {
+  color: #ff9aa2 !important;     /* gentle red with better contrast on dark */
+}
+
+/* Date input calendar icon (some browsers) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.9);            /* keep the icon visible on dark */
+}
+
+/* Button row spacing */
+.card .btn + .btn {
+  margin-left: .5rem;
+}
