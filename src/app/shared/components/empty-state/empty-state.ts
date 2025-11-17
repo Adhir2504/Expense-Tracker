@@ -1,5 +1,9 @@
 import { Component, Input } from '@angular/core';
 
+/**
+ * Reusable empty-state component displayed when a list has no items.
+ * Accepts `title` and `subtitle` inputs so callers can customize the message.
+ */
 @Component({
   selector: 'empty-state',
   standalone: true,

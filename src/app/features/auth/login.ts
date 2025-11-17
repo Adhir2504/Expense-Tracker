@@ -4,6 +4,12 @@ import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
 
+/**
+ * Simple login component used by the demo app. It validates the form,
+ * performs a fake delay (to simulate a real request) and calls
+ * `AuthService.login`. On success it navigates back to the requested
+ * URL provided via the `returnUrl` query param.
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -18,27 +24,34 @@ export class Login {
   form: FormGroup;
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+    // Build form with basic client-side validation rules
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       remember: [true]
     });
   }
 
+  // Called when the user submits the login form
   async submit() {
     this.error = null;
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     this.loading = true;
-    const { email, password } = this.form.value as { email: string; password: string };
 
-    await new Promise(r => setTimeout(r, 300));
+    // Extract credentials clearly so newcomers see the shape
+    const values = this.form.value as { email: string; password: string };
+    const email = values.email;
+    const password = values.password;
 
-    const ok = this.auth.login(email, password);
+    // Small artificial delay to mimic a network request
+    await new Promise(res => setTimeout(res, 300));
+
+    const success = this.auth.login(email, password);
     this.loading = false;
-    if (!ok) { this.error = 'Invalid credentials'; return; }
+    if (!success) { this.error = 'Invalid credentials'; return; }
 
-    const url = new URL(window.location.href);
-    const returnUrl = url.searchParams.get('returnUrl') || '/';
+    // Read returnUrl from current location query params and navigate there
+    const returnUrl = new URL(window.location.href).searchParams.get('returnUrl') || '/';
     this.router.navigateByUrl(returnUrl);
   }
 }

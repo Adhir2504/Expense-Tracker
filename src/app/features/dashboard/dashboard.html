@@ -41,9 +41,9 @@
     </select>
   </div>
 
-  <div class="col-12 text-end">
-    <button class="btn btn-outline-secondary btn-sm" (click)="onClearFilters()">Reset</button>
-    <a routerLink="/add" class="btn btn-primary btn-sm ms-2">+ Add Expense</a>
+    <div class="col-12 text-end">
+    <button class="btn btn-outline-secondary btn-sm" (click)="onClearFilters()"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset</button>
+    <a routerLink="/add" class="btn btn-primary btn-sm ms-2"><i class="bi bi-plus-lg me-1"></i>Add Expense</a>
   </div>
 </div>
 
@@ -118,7 +118,14 @@
             </span>
           </td>
           <td class="text-end">
-            <button class="btn btn-sm btn-outline-danger" (click)="store.remove(e.id)">Delete</button>
+            <button class="btn btn-sm btn-outline-secondary me-2" (click)="onEdit(e.id)">
+              <i class="bi bi-pencil me-1"></i>Edit
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="onDelete(e.id)" [disabled]="isDeleting(e.id)">
+              <i *ngIf="!isDeleting(e.id)" class="bi bi-trash me-1"></i>
+              <span *ngIf="isDeleting(e.id)" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              Delete
+            </button>
           </td>
         </tr>
 

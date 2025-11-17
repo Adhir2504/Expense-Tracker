@@ -1,43 +1,110 @@
-<div class="row g-3">
-  <!-- Total Spent -->
-  <div class="col-md-4">
-    <div class="card">
-      <div class="card-body">
-        <h6 class="text-muted">Total Spent</h6>
-        <div class="display-6">
-          <span class="amount-strong">
-            {{ store.total() | amountFormat: curr.getSymbol(store.currency()) }}
-          </span>
+<div class="container py-4">
+
+  <!-- Page Title -->
+  <div class="mb-4">
+    <h3 class="fw-bold mb-1">Spending Summary</h3>
+    <p class="text-muted">Overview of your expenses and categories</p>
+  </div>
+
+  <!-- Top Summary Cards -->
+  <div class="row g-3">
+    <!-- Total Spent -->
+    <div class="col-md-4">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <h6 class="text-muted">Total Spent</h6>
+          <div class="display-6 mt-2 mb-1">
+            <span class="amount-strong">
+              {{ store.total() | amountFormat: curr.getSymbol(store.currency()) }}
+            </span>
+          </div>
+          <p class="text-muted small">Across all categories</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Category -->
+    <div class="col-md-4">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <h6 class="text-muted">Top Category</h6>
+          <div class="fs-4 mt-2 mb-1">
+            <span *ngIf="entries().length; else noTop" class="badge bg-primary-subtle text-primary px-3 py-2">
+              {{ entries()[0][0] }}
+            </span>
+          </div>
+          <ng-template #noTop>
+            <span class="text-muted small">No data yet</span>
+          </ng-template>
+          <p class="text-muted small">Most spent category</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Transactions -->
+    <div class="col-md-4">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <h6 class="text-muted">Total Transactions</h6>
+          <div class="display-6 mt-2 mb-1">
+            <span class="amount-strong">{{ store.expenses().length }}</span>
+          </div>
+          <p class="text-muted small">Recorded this month</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Category Breakdown -->
-  <div class="col-md-8">
-    <div class="card">
-      <div class="card-body">
-        <h6 class="text-muted mb-2">Category Breakdown</h6>
+  <!-- Monthly spending chart -->
+  <div class="card mt-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Spending (last 12 months)</h5>
+        <span class="text-muted small">Monthly total</span>
+      </div>
+      <div style="height:220px;">
+        <canvas #spendingChart></canvas>
+      </div>
+    </div>
+  </div>
 
-        <div *ngIf="entries().length; else none">
-          <div class="d-grid gap-2">
-            <div class="d-flex justify-content-between align-items-center" *ngFor="let kv of entries()">
-              <div>
+  <!-- Category Breakdown Section -->
+  <div class="card mt-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Category Breakdown</h5>
+        <span class="text-muted small">Spending per category</span>
+      </div>
+
+      <div *ngIf="entries().length; else none">
+        <div class="d-grid gap-3">
+          <div *ngFor="let kv of entries()" class="pb-2 border-bottom">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <div class="fw-semibold">
                 <span class="badge me-2" [ngClass]="cats.getColorClass(kv[0])">{{ kv[0] }}</span>
               </div>
-              <div class="fw-semibold">
-                <span class="amount-strong">
-                  {{ kv[1] | amountFormat: curr.getSymbol(store.currency()) }}
-                </span>
+              <div class="fw-semibold text-end">
+                {{ kv[1] | amountFormat: curr.getSymbol(store.currency()) }}
+              </div>
+            </div>
+
+            <!-- Progress bar for visual breakdown -->
+            <div class="progress" style="height: 8px;">
+              <div
+                class="progress-bar"
+                [style.width.%]="(kv[1] / store.total()) * 100"
+                [ngClass]="cats.getColorClass(kv[0])"
+                role="progressbar">
               </div>
             </div>
           </div>
         </div>
-
-        <ng-template #none>
-          <div class="text-muted">No data.</div>
-        </ng-template>
       </div>
+
+      <ng-template #none>
+        <div class="text-muted text-center py-4">No expenses yet — start tracking your spending!</div>
+      </ng-template>
     </div>
   </div>
+
 </div>

@@ -1,1 +1,25 @@
-/* optional styling */
+.card {
+  border-radius: 16px;
+}
+
+.progress-bar {
+  transition: width 0.6s ease;
+}
+
+.bg-primary-subtle {
+  background-color: rgba(60,120,230,0.1);
+  border: 1px solid rgba(60,120,230,0.2);
+}
+
+.amount-strong {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+h3 {
+  color: var(--primary-600);
+}
+
+@media (max-width: 768px) {
+  .display-6 { font-size: 1.6rem; }
+}

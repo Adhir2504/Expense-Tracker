@@ -1,2 +1,5 @@
 body, html { height: 100%; }
-main { min-height: calc(100vh - 56px); } /* account for navbar */
+main { min-height: calc(100vh - 72px); } /* account for taller navbar */
+
+/* Page-level padding so content doesn't sit flush under navbar */
+main .container { padding-top: 1rem; padding-bottom: 3rem; }

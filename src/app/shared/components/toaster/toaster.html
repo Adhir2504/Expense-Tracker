@@ -1,9 +1,16 @@
 <div class="toaster">
   <div *ngFor="let t of toast.toasts()" class="toast-item" [class]="'toast-' + t.type">
+    <i class="bi me-2" [ngClass]="{
+      'bi-check-circle-fill': t.type === 'success',
+      'bi-info-circle-fill': t.type === 'info',
+      'bi-exclamation-triangle-fill': t.type === 'warning',
+      'bi-x-circle-fill': t.type === 'danger'
+    }" aria-hidden="true"></i>
     <span>{{ t.text }}</span>
-    <button *ngIf="t.onAction" class="btn btn-sm btn-light ms-3" (click)="t.onAction?.(); toast.dismiss(t.id)">
+    <button *ngIf="t.onAction" class="btn btn-sm btn-light ms-3" (click)="onAction(t)">
+      <i class="bi bi-arrow-counterclockwise me-1"></i>
       {{ t.actionText || 'Action' }}
     </button>
-    <button class="btn btn-sm btn-outline-light ms-2" (click)="toast.dismiss(t.id)">×</button>
+    <button class="btn btn-sm btn-outline-light ms-2" (click)="toast.dismiss(t.id)"><i class="bi bi-x-lg"></i></button>
   </div>
 </div>
